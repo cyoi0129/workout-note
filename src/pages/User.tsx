@@ -30,11 +30,11 @@ const User: FC = () => {
         <dl>
           <dt>メールアドレス</dt>
           <dd>
-            <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} />
+            <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
           </dd>
           <dt>パスワード</dt>
           <dd>
-            <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} />
+            <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
           </dd>
         </dl>
         <div className="button">
