@@ -1,0 +1,42 @@
+.ranking {
+  ul {
+    li.item {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      margin-bottom: 8px;
+      column-gap: 16px;
+      h3 {
+        font-size: 16px;
+      }
+      .image {
+        border-radius: 50%;
+        overflow: hidden;
+        aspect-ratio: 1;
+        background-color: #fff;
+        max-width: 80px;
+        img {
+          width: 100%;
+        }
+      }
+      .content {
+        p {
+          display: flex;
+          align-items: center;
+          column-gap: 4px;
+          font-size: 12px;
+        }
+        .result {
+          display: flex;
+          column-gap: 16px;
+          li {
+            display: flex;
+            align-items: center;
+            column-gap: 4px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

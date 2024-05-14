@@ -1,0 +1,22 @@
+header {
+  background-color: #fedd00;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+  height: 64px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+  img {
+    width: 32px;
+    aspect-ratio: 1;
+  }
+  h1 {
+    font-size: 24px;
+    font-style: normal;
+  }
+}

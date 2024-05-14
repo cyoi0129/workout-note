@@ -1,0 +1,23 @@
+.history {
+  .react-calendar {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    .react-calendar__navigation__label {
+      font-size: 120%;
+    }
+    .react-calendar__navigation__arrow {
+      font-size: 160%;
+    }
+    .react-calendar__tile--active {
+      background-color: #fedd00;
+      color: #323232;
+    }
+    .react-calendar__month-view__days__day + .react-calendar__month-view__days__day--weekend {
+      color: #006edc;
+    }
+    .react-calendar__month-view__days__day--weekend + .react-calendar__month-view__days__day--weekend {
+      color: #d10000;
+    }
+  }
+}
