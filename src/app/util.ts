@@ -1,1 +1,1 @@
-export const api_base = process.env.NODE_ENV === "development" ? "http://localhost:8080/api" : import.meta.env.API_URL;
+export const api_base = process.env.NODE_ENV === "development" ? "http://localhost:8080/api" : "https://workout-note-api.onrender.com/api";
