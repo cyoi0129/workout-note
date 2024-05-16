@@ -13,5 +13,5 @@ export const date2Str = (date: Date): string => {
  * @returns 
  */
 export const str2Date = (str: string): Date => {
-  return new Date(str);
+  return new Date(str.replace(/\-/g, '/'));
 };

@@ -53,7 +53,7 @@ a {
 
 main {
   width: 100%;
-  padding: 64px 0;
+  padding: 64px 0 100px;
 }
 
 section {
@@ -140,7 +140,7 @@ section {
 .float_icon {
   z-index: 1;
   position: fixed;
-  bottom: 80px;
+  bottom: 120px;
   right: 16px;
   background-color:#fedd00;
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
