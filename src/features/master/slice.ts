@@ -23,7 +23,7 @@ const MasterDataSlice = createSlice({
         state.types = action.payload.types;
         state.muscles = action.payload.muscles;
         state.masters = action.payload.masters;
-        Cookies.set('master', '1', { expires: 30 });
+        Cookies.set('master', '1', { expires: 1000 });
         intialIndexedDb(action.payload.types, action.payload.muscles, action.payload.masters);
       } else {
         state.error = true;

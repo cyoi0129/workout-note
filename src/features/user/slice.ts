@@ -34,7 +34,7 @@ const UserDataSlice = createSlice({
         state.login = true;
         state.error = false;
         state.user = action.payload.user;
-        Cookies.set('user', action.payload.user, { expires: 30 });
+        Cookies.set('user', action.payload.user, { expires: 1000 });
       } else {
         state.login = false;
         state.error = true;
