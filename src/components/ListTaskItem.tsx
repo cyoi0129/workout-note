@@ -26,11 +26,11 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
    * 長押時の動作
    */
   const longPress = useLongPress(() => setAlert(true), {
-    onStart: (event, meta) => () => { },
-    onCancel: (event, meta) => {
+    onStart: () => () => { },
+    onCancel: () => {
       setAlert(false);
     },
-    filterEvents: (event) => true,
+    filterEvents: () => true,
     threshold: 1000,
     captureEvent: true,
     cancelOnMovement: false,
