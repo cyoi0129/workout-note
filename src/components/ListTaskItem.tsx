@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { RemoveAlert } from '.';
 import { useNavigate } from 'react-router-dom';
 import { TaskItemProps } from '../features/task/types';
 import { useAppSelector } from '../app/hooks';
@@ -21,9 +22,11 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
     if (link) navigate(`/task/${data.id}`); // 呼び出すコンポーネントによってクリック時の遷移挙動有無を処理
   };
 
-
+  /**
+   * 長押時の動作
+   */
   const longPress = useLongPress(() => setAlert(true), {
-    onStart: (event, meta) => () => {},
+    onStart: (event, meta) => () => { },
     onCancel: (event, meta) => {
       setAlert(false);
     },
@@ -35,39 +38,42 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
   });
 
   return (
-    <li className={link ? 'list_item link' : 'list_item'} onClick={clickItem}>
-      <div className="head">
-        <h3>{master?.name}</h3>
-        {link ? null : (
-          <p>
-            <IoMdCalendar />
-            {data.date}
-          </p>
-        )}
-      </div>
-      <ul className="result">
-        {data.weight ? (
+    <>
+      <li className={link ? 'list_item link' : 'list_item'} onClick={clickItem} {...longPress(master)}>
+        <div className="head">
+          <h3>{master?.name}</h3>
+          {link ? null : (
+            <p>
+              <IoMdCalendar />
+              {data.date}
+            </p>
+          )}
+        </div>
+        <ul className="result">
+          {data.weight ? (
+            <li>
+              <IoMdFitness />
+              {data.weight} kg
+            </li>
+          ) : null}
           <li>
-            <IoMdFitness />
-            {data.weight} kg
+            <MdCategory />
+            {data.set} Set
           </li>
-        ) : null}
-        <li>
-          <MdCategory />
-          {data.set} Set
-        </li>
-        <li>
-          <MdOutlineReplay10 />
-          {data.rep} Rep/Min
-        </li>
-        {data.size ? (
           <li>
-            <HiAdjustments />
-            Size: {data.size}
+            <MdOutlineReplay10 />
+            {data.rep} Rep
           </li>
-        ) : null}
-      </ul>
-    </li>
+          {data.size ? (
+            <li>
+              <HiAdjustments />
+              Size: {data.size}
+            </li>
+          ) : null}
+        </ul>
+      </li>
+      {alert ? <RemoveAlert id={Number(data.id)} type="task" action={() => setAlert(false)} /> : null}
+    </>
   );
 };
 

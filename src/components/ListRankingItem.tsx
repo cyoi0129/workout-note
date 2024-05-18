@@ -33,7 +33,7 @@ const ListRankingItem: FC<TaskItemProps> = (props) => {
           </li>
           <li>
             <MdOutlineReplay10 />
-            {data.rep} Rep/Min
+            {data.rep} Rep
           </li>
         </ul>
       </div>

@@ -192,3 +192,34 @@ section {
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
+
+.remove_alert {
+  z-index: 3;
+  position: fixed;
+  width: 100%;
+  height: calc(100svh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  .container {
+    height: 240px;
+    width: calc(100% - 64px);
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    h2 {
+      background-color: #fedd00;
+      width: 100%;
+      text-align: center;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      padding: 8px 0;
+    }
+    p {
+      text-align: center;
+      margin: 48px auto;
+    }
+  }
+}

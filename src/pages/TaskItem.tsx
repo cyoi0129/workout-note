@@ -164,11 +164,11 @@ const TaskItem: FC = () => {
             <input type="range" id="set" name="set" min="0" max="10" value={set} onChange={(e) => changeSet(e)} />
           </dd>
           <dt>
-            <label htmlFor="rep">レップ/時間</label>
+            <label htmlFor="rep">レップ</label>
             <span>{rep}</span>
           </dt>
           <dd>
-            <input type="range" id="rep" name="rep" min="0" max="30" value={rep} onChange={(e) => changeRep(e)} />
+            <input type="range" id="rep" name="rep" min="0" max="15" value={rep} onChange={(e) => changeRep(e)} />
           </dd>
           <dt>
             <label htmlFor="size">マシンのサイズ</label>
