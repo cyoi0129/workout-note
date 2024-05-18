@@ -22,6 +22,7 @@ const TaskItem: FC = () => {
   const [ranking, setRanking] = useState<TaskItemType[]>(taskDataStore.ranking);
   const [modal, setModal] = useState<boolean>(false);
   const [masterName, setMasterName] = useState<string>(initMasterName ? initMasterName.name : '種目を選択');
+  const [workoutType, setWorkoutType] = useState<number>(initMasterName ? initMasterName.type : 0);
   const [master, setMaster] = useState<number>(0);
   const [weight, setWeight] = useState<number>(0);
   const [set, setSet] = useState<number>(0);
@@ -62,6 +63,7 @@ const TaskItem: FC = () => {
     if (master?.id) {
       setMaster(master.id);
       setMasterName(master.name);
+      setWorkoutType(master.type);
     }
   };
 
@@ -156,14 +158,18 @@ const TaskItem: FC = () => {
               <HiSelector />
             </div>
           </dd>
-          <dt>
-            <label htmlFor="weight">重量</label>
-            <input type="text" pattern="\d*" name="weight" value={weight} onChange={(e) => changeWeight(e)} />
-            <span>kg</span>
-          </dt>
-          <dd>
-            <input type="range" id="weight" name="weight" min="0" max="300" value={weight} step="5" onChange={(e) => changeWeight(e)} />
-          </dd>
+          {(workoutType === 2 || workoutType === 3) ?
+            <>
+              <dt>
+                <label htmlFor="weight">重量</label>
+                <input type="text" pattern="\d*" name="weight" value={weight} onChange={(e) => changeWeight(e)} />
+                <span>kg</span>
+              </dt>
+              <dd>
+                <input type="range" id="weight" name="weight" min="0" max="300" value={weight} step="5" onChange={(e) => changeWeight(e)} />
+              </dd>
+            </> : null
+          }
           <dt>
             <label htmlFor="set">セット数</label>
             <span>{set}</span>
@@ -178,16 +184,18 @@ const TaskItem: FC = () => {
           <dd>
             <input type="range" id="rep" name="rep" min="0" max="15" value={rep} onChange={(e) => changeRep(e)} />
           </dd>
-          <dt>
-            <label htmlFor="size">マシンのサイズ</label>
-            <span>{size}</span>
-          </dt>
-          <dd>
-            <input type="range" id="size" name="size" min="0" max="10" value={size} onChange={(e) => changeSize(e)} />
-          </dd>
+          {workoutType === 3 ? <>
+            <dt>
+              <label htmlFor="size">マシンのサイズ</label>
+              <span>{size}</span>
+            </dt>
+            <dd>
+              <input type="range" id="size" name="size" min="0" max="10" value={size} onChange={(e) => changeSize(e)} />
+            </dd>
+          </> : null}
         </dl>
         <div className="button">
-          {taskID === 'new'? null : <button className="remove" onClick={deleteTask}>削除</button>}
+          {taskID === 'new' ? null : <button className="remove" onClick={deleteTask}>削除</button>}
           <button onClick={saveTask}>保存</button>
         </div>
       </section>
