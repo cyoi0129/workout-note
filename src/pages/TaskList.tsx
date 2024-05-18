@@ -5,6 +5,7 @@ import { selectTaskData, fetchTask, setDate, fetchRanking } from '../features/ta
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { TaskItemType } from '../features/task/types';
 import { date2Str, str2Date } from '../features/task/func';
+
 import { MdAdd } from "react-icons/md";
 import { IoMdCalendar } from 'react-icons/io';
 import '../css/tasks.scss';
@@ -13,6 +14,7 @@ const TaskList: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const taskDataStore = useAppSelector(selectTaskData);
+  
   const [tasks, setTasks] = useState<TaskItemType[]>(taskDataStore.tasks);
   const [current, setCurrent] = useState<Date>(str2Date(taskDataStore.date));
 

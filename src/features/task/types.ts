@@ -28,3 +28,9 @@ export interface RankingCheckResult {
   update: boolean;
   id?: number;
 }
+
+export interface RemoveAlertProps {
+  action: any;
+  id: number;
+  type: 'task' | 'ranking';
+}

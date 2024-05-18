@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTask, addTask, updateTask, updateRanking, fetchRanking } from '.';
+import { fetchTask, addTask, updateTask, updateRanking, fetchRanking, removeTask, removeRanking } from '.';
 import { TaskStoreType } from './types';
 import { date2Str } from './func';
 
@@ -39,6 +39,14 @@ const TaskDataSlice = createSlice({
     builder.addCase(updateRanking.fulfilled, (state, action) => {
       state.error = false;
       state.ranking = action.payload;
+    });
+    builder.addCase(removeTask.fulfilled, (state, action) => {
+      state.error = false;
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    });
+    builder.addCase(removeRanking.fulfilled, (state, action) => {
+      state.error = false;
+      state.ranking = state.ranking.filter((item) => item.id !== action.payload);
     });
   },
 });

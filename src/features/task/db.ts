@@ -3,8 +3,8 @@ import { indexeddb } from '../../app/storage';
 
 /**
  * IndexedDbから指定日付のタスクリスト取得
- * @param date 
- * @returns 
+ * @param date
+ * @returns
  */
 export const fetchStorageTask = async (date: string): Promise<TaskItemType[]> => {
   const collection = indexeddb.task.filter((task) => task.date === date);
@@ -14,7 +14,7 @@ export const fetchStorageTask = async (date: string): Promise<TaskItemType[]> =>
 
 /**
  * IndexedDbからランキング情報の取得
- * @returns 
+ * @returns
  */
 export const fetchStorageRanking = async (): Promise<TaskItemType[]> => {
   const rankings = await indexeddb.ranking.toArray();
@@ -23,8 +23,8 @@ export const fetchStorageRanking = async (): Promise<TaskItemType[]> => {
 
 /**
  * IndexedDbにタスクを追加
- * @param task 
- * @returns 
+ * @param task
+ * @returns
  */
 export const addStorageTask = async (task: TaskItemType): Promise<TaskItemType> => {
   const id = await indexeddb.task.add(task);
@@ -42,8 +42,8 @@ export const addStorageTask = async (task: TaskItemType): Promise<TaskItemType> 
 
 /**
  * IndexedDbのタスクを更新
- * @param task 
- * @returns 
+ * @param task
+ * @returns
  */
 export const updateStorageTask = async (task: TaskItemType): Promise<TaskItemType> => {
   try {
@@ -55,9 +55,19 @@ export const updateStorageTask = async (task: TaskItemType): Promise<TaskItemTyp
 };
 
 /**
- * IndexedDbのランキングを更新
- * @param task 
+ * IndexedDbのタスクを削除
+ * @param id 
  * @returns 
+ */
+export const removeStorageTask = async (id: number): Promise<number> => {
+  await indexeddb.task.delete(id);
+  return id;
+};
+
+/**
+ * IndexedDbのランキングを更新
+ * @param task
+ * @returns
  */
 export const updateStorageRanking = async (task: TaskItemType): Promise<TaskItemType[]> => {
   try {
@@ -67,4 +77,14 @@ export const updateStorageRanking = async (task: TaskItemType): Promise<TaskItem
   }
   const rankings = await indexeddb.ranking.toArray();
   return rankings;
+};
+
+/**
+ * IndexedDbのランキングを削除
+ * @param id 
+ * @returns 
+ */
+export const removeStorageRanking = async (id: number): Promise<number> => {
+  await indexeddb.ranking.delete(id);
+  return id;
 };

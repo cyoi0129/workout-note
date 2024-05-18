@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import TaskDataSlice from './slice';
-import { fetchStorageTask, fetchStorageRanking, addStorageTask, updateStorageTask, updateStorageRanking } from './db';
+import { fetchStorageTask, fetchStorageRanking, addStorageTask, updateStorageTask, updateStorageRanking, removeStorageTask, removeStorageRanking } from './db';
 import { TaskItemType } from './types';
 
 export const fetchTask = createAsyncThunk('TaskData/fetchTask', async (date: string) => {
@@ -19,6 +19,11 @@ export const addTask = createAsyncThunk('TaskData/addTask', async (task: TaskIte
   return response;
 });
 
+export const removeTask = createAsyncThunk('TaskData/removeTask', async (id: number) => {
+  const response = await removeStorageTask(id);
+  return response;
+});
+
 export const updateTask = createAsyncThunk('TaskData/updateTask', async (task: TaskItemType) => {
   const response = await updateStorageTask(task);
   return response;
@@ -26,6 +31,11 @@ export const updateTask = createAsyncThunk('TaskData/updateTask', async (task: T
 
 export const updateRanking = createAsyncThunk('TaskData/updateRanking', async (task: TaskItemType) => {
   const response = await updateStorageRanking(task);
+  return response;
+});
+
+export const removeRanking = createAsyncThunk('TaskData/removeRanking', async (id: number) => {
+  const response = await removeStorageRanking(id);
   return response;
 });
 

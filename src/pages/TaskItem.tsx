@@ -34,7 +34,11 @@ const TaskItem: FC = () => {
     setCurrent(str2Date(e.target.value));
   };
   const changeWeight = (e: any): void => {
-    setWeight(Number(e.target.value));
+    let result = e.target.value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s: any) => {
+      return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+    result = result.replace(/[^0-9]/g, "");
+    setWeight(Number(result));
   };
   const changeSet = (e: any): void => {
     setSet(Number(e.target.value));
@@ -146,31 +150,32 @@ const TaskItem: FC = () => {
           </dd>
           <dt>
             <label htmlFor="weight">重量</label>
-            <span>{weight} kg</span>
+            <input type="text" pattern="\d*" name="weight" value={weight} onChange={(e) => changeWeight(e)} />
+            <span>kg</span>
           </dt>
           <dd>
-            <input type="range" id="weight" name="weight" min="0" max="300" defaultValue={weight} step="5" onChange={(e) => changeWeight(e)} />
+            <input type="range" id="weight" name="weight" min="0" max="300" value={weight} step="5" onChange={(e) => changeWeight(e)} />
           </dd>
           <dt>
             <label htmlFor="set">セット数</label>
             <span>{set}</span>
           </dt>
           <dd>
-            <input type="range" id="set" name="set" min="0" max="10" defaultValue={set} onChange={(e) => changeSet(e)} />
+            <input type="range" id="set" name="set" min="0" max="10" value={set} onChange={(e) => changeSet(e)} />
           </dd>
           <dt>
             <label htmlFor="rep">レップ/時間</label>
             <span>{rep}</span>
           </dt>
           <dd>
-            <input type="range" id="rep" name="rep" min="0" max="30" defaultValue={rep} onChange={(e) => changeRep(e)} />
+            <input type="range" id="rep" name="rep" min="0" max="30" value={rep} onChange={(e) => changeRep(e)} />
           </dd>
           <dt>
             <label htmlFor="size">マシンのサイズ</label>
             <span>{size}</span>
           </dt>
           <dd>
-            <input type="range" id="size" name="size" min="0" max="10" defaultValue={size} onChange={(e) => changeSize(e)} />
+            <input type="range" id="size" name="size" min="0" max="10" value={size} onChange={(e) => changeSize(e)} />
           </dd>
         </dl>
         <div className="button">
