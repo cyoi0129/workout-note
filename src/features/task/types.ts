@@ -32,5 +32,4 @@ export interface RankingCheckResult {
 export interface RemoveAlertProps {
   action: any;
   id: number;
-  type: 'task' | 'ranking';
 }

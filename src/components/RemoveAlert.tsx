@@ -1,19 +1,15 @@
 import { FC } from 'react';
 import { useAppDispatch } from '../app/hooks';
-import { removeTask, removeRanking } from '../features/task';
+import { removeRanking } from '../features/task';
 import { RemoveAlertProps } from '../features/task/types';
 import { IoCloseCircle } from 'react-icons/io5';
 
 const RemoveAlert: FC<RemoveAlertProps> = (props) => {
-  const { id, type, action } = props;
+  const { id, action } = props;
   const dispatch = useAppDispatch();
   const removeItem = () => {
     action();
-    if (type === 'task') {
-      dispatch(removeTask(id));
-    } else if (type === 'ranking') {
-      dispatch(removeRanking(id));
-    }
+    dispatch(removeRanking(id));
   }
   return (
     <>

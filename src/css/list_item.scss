@@ -17,10 +17,8 @@ li.list_item {
     align-items: center;
     h3 {
       font-size: 16px;
-      pointer-events: none;
     }
     p {
-      pointer-events: none;
       font-size: 12px;
       display: flex;
       align-items: center;
@@ -28,7 +26,6 @@ li.list_item {
     }
   }
   ul.result {
-    pointer-events: none;
     margin-top: 8px;
     width: 100%;
     display: flex;

@@ -6,7 +6,7 @@ import { HiSelector } from 'react-icons/hi';
 import { selectMasterById } from '../features/master';
 import { MasterSelection } from '../components';
 import { date2Str, str2Date } from '../features/task/func';
-import { selectTaskById, addTask, updateTask, selectTaskData, updateRanking, setDate, fetchRanking } from '../features/task';
+import { selectTaskById, addTask, updateTask, selectTaskData, updateRanking, setDate, fetchRanking, removeTask } from '../features/task';
 import { MasterItemType } from '../features/master/types';
 import { TaskItemType, RankingCheckResult } from '../features/task/types';
 import '../css/task.scss';
@@ -114,6 +114,14 @@ const TaskItem: FC = () => {
     navigate(-1); // プロセス完了後、一個前の画面へ戻る
   };
 
+  /**
+   * タスクの削除
+   */
+  const deleteTask = (): void => {
+    dispatch(removeTask(Number(taskID)));
+    navigate(-1); // プロセス完了後、一個前の画面へ戻る
+  }
+
   useEffect(() => {
     if (!task) return;
     if (taskDataStore.ranking.length === 0) dispatch(fetchRanking()); // ストアにランキング情報がない場合、IndexedDbから取得するように
@@ -179,6 +187,7 @@ const TaskItem: FC = () => {
           </dd>
         </dl>
         <div className="button">
+          {taskID === 'new'? null : <button className="remove" onClick={deleteTask}>削除</button>}
           <button onClick={saveTask}>保存</button>
         </div>
       </section>

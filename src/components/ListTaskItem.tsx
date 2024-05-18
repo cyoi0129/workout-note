@@ -1,5 +1,4 @@
-import { FC, useState } from 'react';
-import { RemoveAlert } from '.';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TaskItemProps } from '../features/task/types';
 import { useAppSelector } from '../app/hooks';
@@ -7,14 +6,13 @@ import { selectMasterById } from '../features/master';
 import { IoMdCalendar, IoMdFitness } from 'react-icons/io';
 import { MdCategory, MdOutlineReplay10 } from 'react-icons/md';
 import { HiAdjustments } from 'react-icons/hi';
-import { useLongPress, LongPressEventType } from 'use-long-press';
 import '../css/list_item.scss';
 
 const ListTaskItem: FC<TaskItemProps> = (props) => {
   const { data, link } = props;
   const navigate = useNavigate();
   const master = useAppSelector(selectMasterById(data.master));
-  const [alert, setAlert] = useState<boolean>(false);
+  
   /**
    * タスク押下時の動作
    */
@@ -22,24 +20,9 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
     if (link) navigate(`/task/${data.id}`); // 呼び出すコンポーネントによってクリック時の遷移挙動有無を処理
   };
 
-  /**
-   * 長押時の動作
-   */
-  const longPress = useLongPress(() => setAlert(true), {
-    onStart: () => () => { },
-    onCancel: () => {
-      setAlert(false);
-    },
-    filterEvents: () => true,
-    threshold: 1000,
-    captureEvent: true,
-    cancelOnMovement: false,
-    detect: LongPressEventType.Touch
-  });
-
   return (
     <>
-      <li className={link ? 'list_item link' : 'list_item'} onClick={clickItem} {...longPress(master)}>
+      <li className={link ? 'list_item link' : 'list_item'} onClick={clickItem}>
         <div className="head">
           <h3>{master?.name}</h3>
           {link ? null : (
@@ -72,7 +55,6 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
           ) : null}
         </ul>
       </li>
-      {alert ? <RemoveAlert id={Number(data.id)} type="task" action={() => setAlert(false)} /> : null}
     </>
   );
 };
