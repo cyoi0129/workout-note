@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import TaskDataSlice from './slice';
-import { fetchStorageTask, fetchStorageRanking, addStorageTask, updateStorageTask, updateStorageRanking, removeStorageTask, removeStorageRanking } from './db';
-import { TaskItemType } from './types';
+import { fetchStorageTask, fetchStorageRanking, addStorageTask, updateStorageTask, updateStorageRanking, removeStorageTask, removeStorageRanking, copyStorageTasks } from './db';
+import { TaskItemType, CopyDates } from './types';
 
 export const fetchTask = createAsyncThunk('TaskData/fetchTask', async (date: string) => {
   const response = await fetchStorageTask(date);
@@ -16,6 +16,11 @@ export const fetchRanking = createAsyncThunk('TaskData/fetchRanking', async () =
 
 export const addTask = createAsyncThunk('TaskData/addTask', async (task: TaskItemType) => {
   const response = await addStorageTask(task);
+  return response;
+});
+
+export const copyTasks = createAsyncThunk('TaskData/copyTasks', async (dates: CopyDates) => {
+  const response = await copyStorageTasks(dates);
   return response;
 });
 

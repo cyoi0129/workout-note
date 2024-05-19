@@ -1,4 +1,4 @@
-import { TaskItemType } from './types';
+import { TaskItemType, CopyDates } from './types';
 import { indexeddb } from '../../app/storage';
 
 /**
@@ -37,6 +37,44 @@ export const addStorageTask = async (task: TaskItemType): Promise<TaskItemType> 
     weight: task.weight,
     size: task.size,
   };
+  return result;
+};
+
+/**
+ * IndexedDbに複数タスクを追加
+ * @param task
+ * @returns
+ */
+export const addStorageTasks = async (tasks: TaskItemType[]): Promise<TaskItemType[]> => {
+  const date = tasks[0].date;
+  const collection = indexeddb.task.filter((task) => task.date === date);
+  await indexeddb.task.bulkAdd(tasks);
+  const result = await collection.toArray();
+  return result;
+};
+
+/**
+ * IndexedDbに複数タスクを複製
+ * @param dates 
+ * @returns 
+ */
+export const copyStorageTasks = async (dates: CopyDates): Promise<TaskItemType[]> => {
+  const targetList = indexeddb.task.filter((task) => task.date === dates.target);
+  const resultList = indexeddb.task.filter((task) => task.date === dates.current);
+  const tasks = await targetList.toArray();
+  let data: TaskItemType[] = [];
+  tasks.forEach(item =>
+    data.push({
+      date: dates.current,
+      master: item.master,
+      set: item.set,
+      rep: item.rep,
+      weight: item.weight,
+      size: item.size
+    })
+  );
+  await indexeddb.task.bulkAdd(data);
+  const result = await resultList.toArray();
   return result;
 };
 
