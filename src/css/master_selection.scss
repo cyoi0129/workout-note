@@ -8,9 +8,11 @@
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
+
   top: 64px;
   left: 0;
   border-top-left-radius: 8px;
@@ -18,12 +20,13 @@
   box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.3);
 
   .master_filter {
-    // margin: 16px 0;
     display: flex;
     justify-content: center;
     column-gap: 8px;
+
     select {
       margin: 16px 0;
+      padding: 0 16px;
       width: calc(50% - 16px);
       border: none;
       appearance: none;
@@ -31,12 +34,15 @@
       background-color: #efefef;
       border-radius: 4px;
       height: 36px;
+      color: #323232;
+      cursor: pointer;
     }
   }
 
-  > ul {
+  >ul {
     border-top: dotted 1px #999;
   }
+
   li.item {
     display: flex;
     align-items: center;
@@ -44,9 +50,11 @@
     border-bottom: dotted 1px #999;
     position: relative;
     cursor: pointer;
+
     h3 {
       font-size: 14px;
     }
+
     .type {
       position: absolute;
       left: 0;
@@ -57,15 +65,18 @@
       font-size: 12px;
       border-bottom-right-radius: 8px;
     }
+
     .image {
       border-radius: 50%;
       overflow: hidden;
       aspect-ratio: 1;
       max-width: 100px;
+
       img {
         width: 100%;
       }
     }
+
     .content {
       span {
         background-color: #fedd00;
@@ -73,11 +84,13 @@
         padding: 4px 4px;
         font-size: 12px;
       }
+
       ul.muscle {
         margin-top: 8px;
         display: flex;
         gap: 4px;
         flex-wrap: wrap;
+
         li {
           background-color: #999;
           color: #fff;
@@ -89,12 +102,14 @@
     }
   }
 }
+
 .close {
   cursor: pointer;
   position: absolute;
   z-index: 3;
   top: 8px;
   right: 8px;
+
   svg {
     color: #fff;
     font-size: 48px;
