@@ -65,6 +65,8 @@
 
       &.copy_date {
         position: absolute;
+        width: calc(100vw - 32px);
+        left: 0;
         top: 0;
       }
 

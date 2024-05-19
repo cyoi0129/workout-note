@@ -25,6 +25,7 @@ const TaskList: FC = () => {
    */
   const changeCurrent = (e: any): void => {
     setCurrent(str2Date(e.target.value));
+    setCopyDate(null);
   };
 
   /**
