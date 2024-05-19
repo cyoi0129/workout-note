@@ -16,6 +16,27 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.3);
+
+  .master_filter {
+    // margin: 16px 0;
+    display: flex;
+    justify-content: center;
+    column-gap: 8px;
+    select {
+      margin: 16px 0;
+      width: calc(50% - 16px);
+      border: none;
+      appearance: none;
+      text-align: center;
+      background-color: #efefef;
+      border-radius: 4px;
+      height: 36px;
+    }
+  }
+
+  > ul {
+    border-top: dotted 1px #999;
+  }
   li.item {
     display: flex;
     align-items: center;
