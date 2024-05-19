@@ -17,7 +17,7 @@ const TaskList: FC = () => {
 
   const [tasks, setTasks] = useState<TaskItemType[]>(taskDataStore.tasks);
   const [current, setCurrent] = useState<Date>(str2Date(taskDataStore.date));
-  const [copyDate, setCopyDate] = useState<Date>(new Date());
+  const [copyDate, setCopyDate] = useState<Date | null>(null);
 
   /**
    * 日付の変更プロセス
@@ -39,7 +39,8 @@ const TaskList: FC = () => {
    * DBの複製メソッド呼び出す
    */
   const copyFromHistory = (): void => {
-    dispatch(copyTasks({target: date2Str(copyDate), current: date2Str(current)}))
+    if (!copyDate) return;
+    dispatch(copyTasks({ target: date2Str(copyDate), current: date2Str(current) }))
   }
 
   useEffect(() => {
@@ -67,11 +68,19 @@ const TaskList: FC = () => {
           <input type="date" defaultValue={date2Str(current)} onChange={(e) => changeCurrent(e)} />
         </div>
         {tasks.length === 0 ? <div className="history_copy">
-          <div className="date_area">
-            <p>{copyDate.toLocaleDateString()}</p>
-            <input type="date" defaultValue={date2Str(copyDate)} onChange={(e) => changeCopy(e)} />
-          </div>
-          <button onClick={copyFromHistory}>この履歴からコピー</button>
+          {copyDate ?
+            <div className="select_area">
+              <div className="date_area">
+                <p className="selected_date">{copyDate.toLocaleDateString()}</p>
+                <input className="date_input" type="date" defaultValue={date2Str(copyDate)} onChange={(e) => changeCopy(e)} />
+              </div>
+              <button onClick={copyFromHistory}>この日からコピー</button>
+            </div>
+            :
+            <div className="copy_area">
+              <p className="select_copy">履歴からコピー</p>
+              <input className="copy_date" type="date" onChange={(e) => changeCopy(e)} />
+            </div>}
         </div> : null}
       </section>
       <section>
