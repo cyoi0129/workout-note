@@ -6,3 +6,4 @@ export { default as ListRankingItem } from './ListRankingItem';
 export { default as ListTaskItem } from './ListTaskItem';
 export { default as MasterSelection } from './MasterSelection';
 export { default as RemoveAlert } from './RemoveAlert';
+export { default as ChartItem } from './ChartItem';

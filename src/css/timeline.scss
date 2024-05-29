@@ -1,0 +1,12 @@
+.timeline {
+  h2 {
+    text-align: center;
+  }
+  .chart_area {
+    height: calc(100svh - 232px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
