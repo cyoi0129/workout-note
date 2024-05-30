@@ -11,3 +11,8 @@ export interface GeneralDbItemType {
 export interface UpdateDialogProps {
   registration: any;
 }
+
+export interface AlertProps {
+  action: any;
+  id: number;
+}

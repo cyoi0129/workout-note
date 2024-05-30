@@ -55,22 +55,22 @@ export const addStorageTasks = async (tasks: TaskItemType[]): Promise<TaskItemTy
 
 /**
  * IndexedDbに複数タスクを複製
- * @param dates 
- * @returns 
+ * @param dates
+ * @returns
  */
 export const copyStorageTasks = async (dates: CopyDates): Promise<TaskItemType[]> => {
   const targetList = indexeddb.task.filter((task) => task.date === dates.target);
   const resultList = indexeddb.task.filter((task) => task.date === dates.current);
   const tasks = await targetList.toArray();
   let data: TaskItemType[] = [];
-  tasks.forEach(item =>
+  tasks.forEach((item) =>
     data.push({
       date: dates.current,
       master: item.master,
       set: item.set,
       rep: item.rep,
       weight: item.weight,
-      size: item.size
+      size: item.size,
     })
   );
   await indexeddb.task.bulkAdd(data);
@@ -94,8 +94,8 @@ export const updateStorageTask = async (task: TaskItemType): Promise<TaskItemTyp
 
 /**
  * IndexedDbのタスクを削除
- * @param id 
- * @returns 
+ * @param id
+ * @returns
  */
 export const removeStorageTask = async (id: number): Promise<number> => {
   await indexeddb.task.delete(id);
@@ -104,14 +104,27 @@ export const removeStorageTask = async (id: number): Promise<number> => {
 
 /**
  * IndexedDbのランキングを更新
- * @param task
+ * @param master
  * @returns
  */
-export const updateStorageRanking = async (task: TaskItemType): Promise<TaskItemType[]> => {
-  try {
-    await indexeddb.ranking.put(task);
-  } catch (error) {
-    console.log(error);
+export const updateStorageRanking = async (master: number): Promise<TaskItemType[]> => {
+  const tasks_query = indexeddb.task.filter((task) => task.master === master);
+  const ranking_query = indexeddb.ranking.filter((task) => task.master === master);
+  const target_tasks = await tasks_query.toArray();
+  const target_ranking = await ranking_query.first();
+  const tasks: TaskItemType[] = target_tasks.sort((a, b) => Number(b.weight) - Number(a.weight));
+  const maxTask: TaskItemType = tasks[0];
+  if (!target_ranking) {
+    // 新規追加の場合
+    await indexeddb.ranking.put(maxTask);
+  } else if (target_tasks.length === 0) {
+    // 既存削除の場合
+    await indexeddb.ranking.delete(target_ranking.id);
+  } else if (Number(target_ranking.weight) !== Number(maxTask.weight)) {
+    // 既存更新の場合
+    let newRankingItem: TaskItemType = maxTask;
+    newRankingItem.id = target_ranking.id;
+    await indexeddb.ranking.update(target_ranking.id, newRankingItem);
   }
   const rankings = await indexeddb.ranking.toArray();
   return rankings;
@@ -119,8 +132,8 @@ export const updateStorageRanking = async (task: TaskItemType): Promise<TaskItem
 
 /**
  * IndexedDbのランキングを削除
- * @param id 
- * @returns 
+ * @param id
+ * @returns
  */
 export const removeStorageRanking = async (id: number): Promise<number> => {
   await indexeddb.ranking.delete(id);

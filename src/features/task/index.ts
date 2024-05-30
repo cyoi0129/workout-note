@@ -34,8 +34,8 @@ export const updateTask = createAsyncThunk('TaskData/updateTask', async (task: T
   return response;
 });
 
-export const updateRanking = createAsyncThunk('TaskData/updateRanking', async (task: TaskItemType) => {
-  const response = await updateStorageRanking(task);
+export const updateRanking = createAsyncThunk('TaskData/updateRanking', async (id: number) => {
+  const response = await updateStorageRanking(id);
   return response;
 });
 

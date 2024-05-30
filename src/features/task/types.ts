@@ -29,11 +29,6 @@ export interface RankingCheckResult {
   id?: number;
 }
 
-export interface RemoveAlertProps {
-  action: any;
-  id: number;
-}
-
 export interface CopyDates {
   target: string;
   current: string;

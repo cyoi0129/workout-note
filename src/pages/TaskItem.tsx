@@ -8,7 +8,7 @@ import { MasterSelection } from '../components';
 import { date2Str, str2Date } from '../features/task/func';
 import { selectTaskById, addTask, updateTask, selectTaskData, updateRanking, setDate, fetchRanking, removeTask } from '../features/task';
 import { MasterItemType } from '../features/master/types';
-import { TaskItemType, RankingCheckResult } from '../features/task/types';
+import { TaskItemType } from '../features/task/types';
 import '../css/task.scss';
 
 const TaskItem: FC = () => {
@@ -19,7 +19,6 @@ const TaskItem: FC = () => {
   const task = useAppSelector(selectTaskById(Number(taskID)));
   const initMasterName = useAppSelector(selectMasterById(task ? task.master : 0));
   const taskDataStore = useAppSelector(selectTaskData);
-  const [ranking, setRanking] = useState<TaskItemType[]>(taskDataStore.ranking);
   const [modal, setModal] = useState<boolean>(false);
   const [masterName, setMasterName] = useState<string>(initMasterName ? initMasterName.name : '種目を選択');
   const [workoutType, setWorkoutType] = useState<number>(initMasterName ? initMasterName.type : 0);
@@ -51,6 +50,7 @@ const TaskItem: FC = () => {
     setSize(Number(e.target.value));
   };
   const showModal = (): void => {
+    if (initMasterName) return;
     setModal(true);
   };
 
@@ -59,35 +59,13 @@ const TaskItem: FC = () => {
    * @param master 
    */
   const masterSelectAction = (master?: MasterItemType): void => {
+    if (initMasterName) return;
     setModal(false);
     if (master?.id) {
       setMaster(master.id);
       setMasterName(master.name);
       setWorkoutType(master.type);
     }
-  };
-
-  /**
-   * ランキングの更新必要性をチェック
-   * @param task 
-   * @returns 
-   */
-  const checkRanking = (task: TaskItemType): RankingCheckResult => {
-    let result: RankingCheckResult = {
-      update: false,
-    };
-    const target = ranking.find((item) => item.master === task.master);
-    if (!task.weight) { // 重量のない種目はスキップ
-      result.update = false;
-    } else if (!target) { // ランキングにない種目は重量比較なしで追加
-      result.update = true;
-    } else if (target.weight && task.weight > target.weight) {  // 同一種目で重量超過した場合、履歴更新
-      result.update = true;
-      result.id = target.id;
-    } else {  // どちらも当てはまらない場合はスキップ
-      result.update = false;
-    }
-    return result;
   };
 
   /**
@@ -102,17 +80,13 @@ const TaskItem: FC = () => {
       weight: weight,
       size: size,
     };
-    const rankingCheckResult = checkRanking(taskData);  // ランキングの更新必要性をチェック
     if (taskID === 'new') { // idない場合はタスクの追加
       dispatch(addTask(taskData));
     } else {  // idある場合はタスクの更新
       taskData.id = Number(taskID);
       dispatch(updateTask(taskData));
     }
-    if (rankingCheckResult.update) {  // ランキングの更新が必要の場合
-      taskData.id = rankingCheckResult.id;  // タスクのidからランキングのidに上書き（undefindedの場合も）
-      dispatch(updateRanking(taskData));
-    }
+    if (taskData.weight) dispatch(updateRanking(taskData.master));
     navigate(-1); // プロセス完了後、一個前の画面へ戻る
   };
 
@@ -121,6 +95,7 @@ const TaskItem: FC = () => {
    */
   const deleteTask = (): void => {
     dispatch(removeTask(Number(taskID)));
+    if(weight) dispatch(updateRanking(master));
     navigate(-1); // プロセス完了後、一個前の画面へ戻る
   }
 
@@ -136,7 +111,6 @@ const TaskItem: FC = () => {
   }, [task]);
 
   useEffect(() => {
-    setRanking(taskDataStore.ranking);
     setCurrent(str2Date(taskDataStore.date));
   }, [taskDataStore]);
 
@@ -153,7 +127,7 @@ const TaskItem: FC = () => {
         <dl>
           <dt>種目</dt>
           <dd>
-            <div className="selection" onClick={showModal}>
+            <div className={initMasterName? "selection disable" : "selection"} onClick={showModal}>
               {masterName}
               <HiSelector />
             </div>
