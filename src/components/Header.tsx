@@ -7,8 +7,8 @@ const Header: FC = () => {
   return (
     <header>
       <h1>
-        <img src="/logo512.png" alt="まっちょの森" />
-        まっちょの森
+        <img src="/icons/logo512.png" alt="まっちょノート" />
+        まっちょノート
       </h1>
       <div className="hd_user">
         <Link to="/user">
