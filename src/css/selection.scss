@@ -1,0 +1,23 @@
+.selection {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  max-height: 100px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  input, label {
+    cursor: pointer;
+  }
+  input {
+    margin-right: 4px;
+  }
+}

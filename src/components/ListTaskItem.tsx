@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TaskItemProps } from '../features/task/types';
 import { useAppSelector } from '../app/hooks';
-import { selectMasterById } from '../features/master';
+import { selectMenuById } from '../features/master';
 import { IoMdCalendar, IoMdFitness } from 'react-icons/io';
 import { MdCategory, MdOutlineReplay10 } from 'react-icons/md';
 import { HiAdjustments } from 'react-icons/hi';
@@ -11,7 +11,7 @@ import '../css/list_item.scss';
 const ListTaskItem: FC<TaskItemProps> = (props) => {
   const { data, link } = props;
   const navigate = useNavigate();
-  const master = useAppSelector(selectMasterById(data.master));
+  const menu = useAppSelector(selectMenuById(data.menu));
   
   /**
    * タスク押下時の動作
@@ -24,7 +24,7 @@ const ListTaskItem: FC<TaskItemProps> = (props) => {
     <>
       <li className={link ? 'list_item link' : 'list_item'} onClick={clickItem}>
         <div className="head">
-          <h3>{master?.name}</h3>
+          <h3>{menu?.name}</h3>
           {link ? null : (
             <p>
               <IoMdCalendar />

@@ -1,42 +1,51 @@
 import { FC, useEffect } from 'react';
-import { Route, Navigate, Routes, useNavigate } from 'react-router-dom';
+import { Route, Navigate, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { Header, Footer, ScrollToTop } from './components';
+import { Search, Chat, Message, Match, User, History, TaskItem, TaskList, TimeLine } from './pages';
 import { useAppDispatch } from './app/hooks';
-import { setUserLogin } from './features/user';
-import { fetchData, fetchStorage } from './features/master';
-import { HistoryPage, MasterPage, TaskListPage, TaskItemPage, RankingPage, UserPage, TimeLinePage } from './pages';
-import { ScrollToTop, Header, Footer } from './components';
+import { fetchUserInfo } from './features/user';
+import { fetchNoticeData } from './features/notice';
+import { fetchMasterData, fetchMasterStorage } from './features/master';
 import './css/common.scss';
 import Cookies from 'js-cookie';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (Cookies.get('user')) {
-      dispatch(setUserLogin());
+    if (Cookies.get('user_token')) {
+      dispatch(fetchNoticeData());
+      dispatch(fetchUserInfo());
       if (!Cookies.get('master')) {
-        dispatch(fetchData());
+        dispatch(fetchMasterData());
       } else {
-        dispatch(fetchStorage());
+        dispatch(fetchMasterStorage());
       }
     } else {
-      navigate("/user");
+      navigate('/user');
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchNoticeData());
+  }, [location]);
 
   return (
     <>
       <Header />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<HistoryPage />} />
-        <Route path="/master" element={<MasterPage />} />
-        <Route path="/tasks" element={<TaskListPage />} />
-        <Route path="/task/:id" element={<TaskItemPage />} />
-        <Route path="/ranking" element={<RankingPage />} />
-        <Route path="/timeline/:id" element={<TimeLinePage />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path="/" element={<History />} />
+        <Route path="/timeline/:id" element={<TimeLine />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/message/:id" element={<Message />} />
+        <Route path="/tasks" element={<TaskList />} />
+        <Route path="/task/:id" element={<TaskItem />} />
+        <Route path="/match" element={<Match />} />
+        <Route path="/user" element={<User />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
       <Footer />

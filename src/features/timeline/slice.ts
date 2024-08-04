@@ -4,7 +4,7 @@ import { TimeLineStoreType } from './types';
 
 const initialState: TimeLineStoreType = {
   error: false,
-  master: 0,
+  menu: 0,
   tasks: [],
 };
 
@@ -15,7 +15,7 @@ const TimeLineDataSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchTimeLine.fulfilled, (state, action) => {
       state.error = false;
-      state.master = action.payload.master;
+      state.menu = action.payload.menu;
       state.tasks = action.payload.tasks;
     });
   },

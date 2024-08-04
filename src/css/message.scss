@@ -1,0 +1,129 @@
+.message {
+  h2 {
+    text-align: center;
+    background-color: #323232;
+    color: #fff;
+    padding: 8px 0;
+  }
+  section {
+    padding: 0 16px;
+  }
+  .message_area {
+    padding: 16px 0;
+    height: calc(100dvh - 380px);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  ul {
+    li {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      h4 {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        margin-bottom: 4px;
+        svg {
+          margin-right: 4px;
+        }
+      }
+      .message {
+        max-width: 70%;
+        word-break: break-all;
+        border-radius: 8px;
+        padding: 8px;
+      }
+      .time {
+        font-size: 10px;
+        color: #999;
+        margin-top: 4px;
+      }
+      &.send {
+        align-items: flex-end;
+        .message {
+          background-color: #fedd00;
+          position: relative;
+          display: inline-block;
+          padding: 7px 10px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -15px;
+            margin-top: -15px;
+            border: 10px solid transparent;
+            border-left: 15px solid #fedd00;
+          }
+        }
+      }
+      &.receive {
+        .message {
+          background-color: #fff;
+          position: relative;
+          display: inline-block;
+          padding: 7px 10px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -15px;
+            margin-top: -15px;
+            border: 10px solid transparent;
+            border-right: 10px solid #fff;
+          }
+        }
+      }
+    }
+  }
+  .send_area {
+    border-top: solid 1px #ccc;
+    background-color: #efefef;
+    bottom: 120px;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    padding: 16px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .send_box {
+      width: calc(100% - 32px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      textarea {
+        appearance: none;
+        border: none;
+        height: 96px;
+        width: calc(100% - 72px);
+        border-radius: 4px;
+        padding: 0 8px;
+        resize: none;
+        font-size: 16px;
+      }
+      .send_btn {
+        background-color: #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        &.enable {
+          cursor: pointer;
+          background-color: #fedd00;
+        }
+        svg {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

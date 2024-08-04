@@ -1,61 +1,93 @@
-import { GeneralItemType, GeneralDbItemType } from "../../app/types";
+import { GeneralItemType, GeneralDbItemType } from '../../app/types';
 
-export type WorkoutType = GeneralItemType;
-export type WorkoutDbType = GeneralDbItemType;
+export interface StationItemType extends GeneralItemType {
+  lineID: number;
+}
 
-export interface MuscleType extends GeneralItemType {
+export interface LineStationItemType extends GeneralItemType {
+  stations: StationItemType[];
+}
+
+export interface StationDbItemType extends GeneralDbItemType {
+  LineID: number;
+}
+
+export interface MuscleItemType extends GeneralItemType {
   part: string;
 }
 
-export interface MuscleDbType extends GeneralDbItemType {
+export interface MuscleDbItemType extends GeneralDbItemType {
   Part: string;
 }
 
-export type MuscleGroupType = '胸'|'背中'|'肩'|'腕'|'腹'|'足';
-
-export interface MasterItemType {
+export interface MenuItemType {
   id: number;
   name: string;
   image: string;
-  type: number;
+  type: string;
   target: number;
   muscles: number[];
 }
 
-export interface MasterDbItemType {
+export interface MenuDbItemType {
   Id: number;
   Name: string;
   Image: string;
-  Type: number;
+  Type: string;
   Target: number;
   Muscles: number[];
 }
 
-export interface MasterItemProps {
-  action?: any;
-  data: MasterItemType;
-}
-
 export interface MasterStoreType {
-	error: boolean;
-  types: WorkoutType[];
-  muscles: MuscleType[];
-  masters: MasterItemType[];
+  error: boolean;
+  loading: boolean;
+  lines: GeneralItemType[];
+  areas: GeneralItemType[];
+  gyms: GeneralItemType[];
+  stations: StationItemType[];
+  muscles: MuscleItemType[];
+  menus: MenuItemType[];
 }
 
 export interface DbMasterResponseType {
   status: number;
-  types: WorkoutDbType[];
-  muscles: MuscleDbType[];
-  masters: MasterDbItemType[];
+  data: {
+    Lines: GeneralDbItemType[];
+    Areas: GeneralDbItemType[];
+    Gyms: GeneralDbItemType[];
+    Stations: StationDbItemType[];
+    Muscles: MuscleDbItemType[];
+    Menus: MenuDbItemType[];
+  };
 }
 
 export interface StorageMasterResponseType {
-  types: WorkoutType[];
-  muscles: MuscleType[];
-  masters: MasterItemType[];
+  data: {
+    lines: GeneralItemType[];
+    areas: GeneralItemType[];
+    gyms: GeneralItemType[];
+    stations: StationItemType[];
+    muscles: MuscleItemType[];
+    menus: MenuItemType[];
+  };
 }
 
 export interface StoreMasterResponseType extends StorageMasterResponseType {
   status: number;
+}
+
+export interface ItemSelectionProps {
+  type: 'area' | 'gym';
+  selected: number[];
+  action: (selected: number[]) => void;
+}
+
+export interface GroupSelectionProps {
+  selected: number[];
+  action: (selected: number[]) => void;
+}
+
+export interface MenuItemProps {
+  action: () => void; //TBD
+  data: MenuItemType;
 }

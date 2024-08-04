@@ -11,8 +11,11 @@ footer {
     justify-content: space-between;
     width: 100%;
     li {
-      width: 25%;
+      width: 20%;
+      max-width: 100px;
+      position: relative;
       a {
+        transition: all 0.2s ease-in;
         height: 64px;
         display: flex;
         flex-direction: column;
@@ -21,23 +24,39 @@ footer {
         row-gap: 8px;
       }
       svg {
+        transition: all 0.2s ease-in;
         font-size: 24px;
         color: #fff;
       }
-      span {
+      .tab_name {
         font-size: 14px;
         color: #fff;
       }
       &.active {
         svg {
           color: #fedd00;
+          font-size: 26px;
         }
-        span {
+        .tab_name {
           color: #fedd00;
+          font-weight: bold;
         }
       }
+      .badge {
+        background-color: #ff7f7f;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        font-size: 12px;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+      }
     }
-
   }
-  
 }

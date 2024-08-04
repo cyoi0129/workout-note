@@ -1,7 +1,9 @@
-export { default as HistoryPage } from "./History";
-export { default as MasterPage } from "./Master";
-export { default as TimeLinePage } from "./TimeLine";
-export { default as TaskListPage } from "./TaskList";
-export { default as TaskItemPage } from "./TaskItem";
-export { default as RankingPage } from "./Ranking";
-export { default as UserPage } from "./User";
+export { default as Search } from './SearchPage';
+export { default as Chat } from './ChatPage';
+export { default as Message } from './MessagePage';
+export { default as Match } from './MatchPage';
+export { default as User } from './UserPage';
+export { default as History } from './HistoryPage';
+export { default as TaskItem } from './TaskItemPage';
+export { default as TaskList } from './TaskListPage';
+export { default as TimeLine } from './TimeLinePage';

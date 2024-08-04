@@ -1,7 +1,7 @@
 import { TaskItemType } from '../task/types';
 
 export interface TimeLineDbResponseType {
-  master: number;
+  menu: number;
   tasks: TaskItemType[];
 }
 

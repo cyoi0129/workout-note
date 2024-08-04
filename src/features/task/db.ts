@@ -30,7 +30,7 @@ export const addStorageTask = async (task: TaskItemType): Promise<TaskItemType> 
   const id = await indexeddb.task.add(task);
   const result: TaskItemType = {
     id: id,
-    master: task.master,
+    menu: task.menu,
     set: task.set,
     rep: task.rep,
     date: task.date,
@@ -62,11 +62,11 @@ export const copyStorageTasks = async (dates: CopyDates): Promise<TaskItemType[]
   const targetList = indexeddb.task.filter((task) => task.date === dates.target);
   const resultList = indexeddb.task.filter((task) => task.date === dates.current);
   const tasks = await targetList.toArray();
-  let data: TaskItemType[] = [];
+  const data: TaskItemType[] = [];
   tasks.forEach((item) =>
     data.push({
       date: dates.current,
-      master: item.master,
+      menu: item.menu,
       set: item.set,
       rep: item.rep,
       weight: item.weight,
@@ -104,12 +104,12 @@ export const removeStorageTask = async (id: number): Promise<number> => {
 
 /**
  * IndexedDbのランキングを更新
- * @param master
+ * @param menu
  * @returns
  */
-export const updateStorageRanking = async (master: number): Promise<TaskItemType[]> => {
-  const tasks_query = indexeddb.task.filter((task) => task.master === master);
-  const ranking_query = indexeddb.ranking.filter((task) => task.master === master);
+export const updateStorageRanking = async (menu: number): Promise<TaskItemType[]> => {
+  const tasks_query = indexeddb.task.filter((task) => task.menu === menu);
+  const ranking_query = indexeddb.ranking.filter((task) => task.menu === menu);
   const target_tasks = await tasks_query.toArray();
   const target_ranking = await ranking_query.first();
   const tasks: TaskItemType[] = target_tasks.sort((a, b) => Number(b.weight) - Number(a.weight));
@@ -122,7 +122,7 @@ export const updateStorageRanking = async (master: number): Promise<TaskItemType
     await indexeddb.ranking.delete(target_ranking.id);
   } else if (Number(target_ranking.weight) !== Number(maxTask.weight)) {
     // 既存更新の場合
-    let newRankingItem: TaskItemType = maxTask;
+    const newRankingItem: TaskItemType = maxTask;
     newRankingItem.id = target_ranking.id;
     await indexeddb.ranking.update(target_ranking.id, newRankingItem);
   }

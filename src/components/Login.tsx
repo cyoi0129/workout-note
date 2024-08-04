@@ -1,0 +1,64 @@
+import { FC, useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { selectUserData, userLogin, userRegister } from '../features/user';
+import { fetchMasterData } from '../features/master';
+import '../css/login.scss';
+
+const Login: FC = () => {
+  const dispatch = useAppDispatch();
+  const userStore = useAppSelector(selectUserData);
+  const [isNew, setIsNew] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  /**
+   * ログインプロセス（ログイン成功後はリロード）
+   */
+  const doProcess = (): void => {
+    if (isNew) {
+      dispatch(userRegister({ email: email, password: password }));
+    } else {
+      dispatch(userLogin({ email: email, password: password }));
+    }
+  };
+
+  useEffect(() => {
+    if (userStore.error) {
+      alert('Login Error');
+    } else if (userStore.login) {
+      dispatch(fetchMasterData());
+    }
+  }, [userStore]);
+
+  return (
+    <div className="login">
+      <section>
+        <ul className="tab">
+          <li className={isNew ? '' : 'active'} onClick={() => setIsNew(false)}>
+            ログイン
+          </li>
+          <li className={isNew ? 'active' : ''} onClick={() => setIsNew(true)}>
+            登録
+          </li>
+        </ul>
+        <div className="form">
+          <dl>
+            <dt>メールアドレス</dt>
+            <dd>
+              <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
+            </dd>
+            <dt>パスワード</dt>
+            <dd>
+              <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
+            </dd>
+          </dl>
+          <div className="button">
+            <button onClick={doProcess}>{isNew ? '登録' : 'ログイン'}</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Login;

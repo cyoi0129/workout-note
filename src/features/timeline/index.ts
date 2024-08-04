@@ -1,9 +1,10 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createAsyncThunk, AsyncThunk } from '@reduxjs/toolkit';
+import { RootState, AsyncThunkConfig } from '../../app/store';
+import { TimeLineDbResponseType } from './types';
 import TimeLineDataSlice from './slice';
 import { fetchStorageTimeLine } from './db';
 
-export const fetchTimeLine = createAsyncThunk('TimeLineData/fetchTimeLine', async (master: number) => {
+export const fetchTimeLine: AsyncThunk<TimeLineDbResponseType, number, AsyncThunkConfig> = createAsyncThunk('TimeLineData/fetchTimeLine', async (master: number) => {
   const response = await fetchStorageTimeLine(master);
   return response;
 });

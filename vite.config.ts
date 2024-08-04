@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/favicon.ico', 'icons/apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'icons/apple-touch-icon.png'],
       injectRegister: 'auto', //ここの記述
       manifest: {
         name: 'Workout Note',
@@ -16,23 +16,23 @@ export default defineConfig({
         theme_color: '#fedd00',
         icons: [
           {
-            src: 'icons/logo192.png',
+            src: 'logo192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'icons/logo512.png',
+            src: 'logo512.png',
             sizes: '512x512',
             type: 'image/png'
           },
           {
-            src: 'icons/logo512.png',
+            src: 'logo512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any'
           },
           {
-            src: 'icons/logo512.png',
+            src: 'logo512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable'
@@ -42,4 +42,3 @@ export default defineConfig({
     })
   ],
 })
-

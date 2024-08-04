@@ -1,0 +1,22 @@
+.home {
+  .tab {
+    margin:32px 4px -1px;
+    width: calc(100% - 8px);
+    display: flex;
+    column-gap: 4px;
+    li {
+      width: calc(50% - 2px);
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      background-color: #fedd00;
+      text-align: center;
+      padding: 8px 0;
+      font-weight: bold;
+      cursor: pointer;
+      &.active {
+        cursor: initial;
+        background-color: #ccc;
+      }
+    }
+  }
+}

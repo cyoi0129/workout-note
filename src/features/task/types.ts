@@ -1,7 +1,9 @@
+import { MenuItemType } from "../master/types";
+
 export interface TaskItemType {
   id?: number;
   date: string;
-  master: number;
+  menu: number;
   set: number;
   rep: number;
   weight?: number;
@@ -13,8 +15,8 @@ export interface TaskItemProps {
   data: TaskItemType;
 }
 
-export interface MasterSelectionProps {
-  action: any;
+export interface MenuSelectionProps {
+  action: (menu: MenuItemType | null) => void;  // TBD
 }
 
 export interface TaskStoreType {

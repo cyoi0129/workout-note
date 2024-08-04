@@ -1,37 +1,45 @@
-import { createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createAsyncThunk, AsyncThunk, createSelector } from '@reduxjs/toolkit';
+import { RootState, AsyncThunkConfig } from '../../app/store';
 import MasterDataSlice from './slice';
-import { fetchDbData, fetchIndexedDbMasterData } from './db';
-import { MasterItemType, WorkoutType, MuscleType } from './types';
+import { fetchDbMasterData, fetchIndexedDbMasterData } from './db';
+import { GeneralItemType } from '../../app/types';
+import { StoreMasterResponseType, StorageMasterResponseType, MuscleItemType, MenuItemType } from './types';
 
-export const fetchData = createAsyncThunk('MasterData/fetchData', async () => {
-  const response = await fetchDbData();
+export const fetchMasterData: AsyncThunk<StoreMasterResponseType, void, AsyncThunkConfig> = createAsyncThunk('MasterData/fetchData', async () => {
+  const response = await fetchDbMasterData();
   return response;
 });
 
-export const fetchStorage = createAsyncThunk('MasterData/fetchStorage', async () => {
+export const fetchMasterStorage: AsyncThunk<StorageMasterResponseType, void, AsyncThunkConfig> = createAsyncThunk('MasterData/fetchMasterStorage', async () => {
   const response = await fetchIndexedDbMasterData();
   return response;
 });
 
 export default MasterDataSlice.reducer;
 export const selectMasterData = (state: RootState) => state.MasterData;
-export const selectWorkoutTypeById = (id: number) => {
+export const selectGymeById = (id: number) => {
   return createSelector(selectMasterData, (state) => {
-    const types: WorkoutType[] = state.types;
-    return types.find((type) => type.id === id);
+    const gyms: GeneralItemType[] = state.gyms;
+    return gyms.find((gym) => gym.id === id);
   });
 };
+export const selectGymsByIds = (ids: number[]) => {
+  return createSelector(selectMasterData, (state) => {
+    const gyms: GeneralItemType[] = state.gyms;
+    return gyms.filter((gym) => ids.includes(gym.id));
+  });
+};
+
 export const selectMusclesByIds = (ids: number[]) => {
   return createSelector(selectMasterData, (state) => {
-    const muscles: MuscleType[] = state.muscles;
+    const muscles: MuscleItemType[] = state.muscles;
     return muscles.filter(muscle => ids.includes(muscle.id));
   });
 };
-export const selectMasterById = (id: number) => {
+export const selectMenuById = (id: number) => {
   return createSelector(selectMasterData, (state) => {
-    const masters: MasterItemType[] = state.masters;
-    if (!masters) return;
-    return masters.find((master) => master.id === id);
+    const menus: MenuItemType[] = state.menus;
+    if (!menus) return;
+    return menus.find((menu) => menu.id === id);
   });
 };

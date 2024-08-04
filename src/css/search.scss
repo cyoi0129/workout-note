@@ -1,0 +1,32 @@
+.search {
+  section {
+    padding-bottom: 36px;
+    h2 {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      .arrow_btn {
+        display: flex;
+        align-items: center;
+      }
+      svg {
+        cursor: pointer;
+      }
+    }
+    > dl {
+      > dt {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 16px 0 8px;
+        display: flex;
+        align-items: center;
+      }
+      > dd {
+        margin: 8px 0 16px;
+      }
+    }
+    .hidden {
+      display: none;
+    }
+  }
+}

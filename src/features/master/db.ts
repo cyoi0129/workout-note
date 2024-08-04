@@ -1,60 +1,42 @@
-import { MasterItemType, DbMasterResponseType, StoreMasterResponseType, MuscleType, WorkoutType, StorageMasterResponseType } from './types';
+import { StoreMasterResponseType, StorageMasterResponseType } from './types';
 import { indexeddb } from '../../app/storage';
-import { convertDbResponse } from './func';
+import { convertDbMasterResponse } from './func';
 import { api_base } from '../../app/util';
 import Cookies from 'js-cookie';
 
 /**
  * APIからマスターデータの取得
- * @returns 
+ * @returns
  */
-export const fetchDbData = async (): Promise<StoreMasterResponseType> => {
-  const targets = ['/types', '/muscles', '/masters/1'];
-  let response: DbMasterResponseType = {
-    status: 0,
-    types: [],
-    muscles: [],
-    masters: [],
-  };
-  await Promise.all(
-    targets.map((target) =>
-      fetch(api_base + target, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: String(Cookies.get('user')),
-        },
-      })
-        .then((result) => result.json())
-        .catch((error) => {
-          console.error(error);
-          response.status = 1;
-        })
-    )
-  ).then((results) => {
-    if (!results[0] || !results[1] || !results[2] || results[0].status !== 0 || results[1].status !== 0 || results[2].status !== 0) {
-      response.status = 1;
-    } else {
-      response.types = results[0].data;
-      response.muscles = results[1].data;
-      response.masters = results[2].data;
-    }
-  });
-  return convertDbResponse(response);
+export const fetchDbMasterData = async (): Promise<StoreMasterResponseType> => {
+  const url: string = api_base + '/masters';
+  const response = await fetch(url, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: String(Cookies.get('user_token')),
+    },
+  })
+    .then((res) => res.json())
+    .catch((error) => {
+      console.error(error);
+    });
+  return convertDbMasterResponse(response);
 };
 
 /**
  * 取得したマスターデータをIndexedDbに保存
- * @param typeList 
- * @param muscleList 
- * @param masterList 
+ * @param master 
  */
-export const intialIndexedDb = async (typeList: WorkoutType[], muscleList: MuscleType[], masterList: MasterItemType[]): Promise<void> => {
+export const intialIndexedDb = async (master: StorageMasterResponseType): Promise<void> => {
   try {
-    await indexeddb.type.bulkAdd(typeList);
-    await indexeddb.muscle.bulkAdd(muscleList);
-    await indexeddb.master.bulkAdd(masterList);
+    await indexeddb.line.bulkAdd(master.data.lines);
+    await indexeddb.area.bulkAdd(master.data.areas);
+    await indexeddb.gym.bulkAdd(master.data.gyms);
+    await indexeddb.station.bulkAdd(master.data.stations);
+    await indexeddb.muscle.bulkAdd(master.data.muscles);
+    await indexeddb.menu.bulkAdd(master.data.menus);
   } catch (error) {
     console.log(error);
   }
@@ -62,15 +44,23 @@ export const intialIndexedDb = async (typeList: WorkoutType[], muscleList: Muscl
 
 /**
  * IndexedDbからマスターデータの取得
- * @returns 
+ * @returns
  */
 export const fetchIndexedDbMasterData = async (): Promise<StorageMasterResponseType> => {
-  const types = await indexeddb.type.toArray();
+  const lines = await indexeddb.line.toArray();
+  const areas = await indexeddb.area.toArray();
+  const gyms = await indexeddb.gym.toArray();
+  const stations = await indexeddb.station.toArray();
   const muscles = await indexeddb.muscle.toArray();
-  const masters = await indexeddb.master.toArray();
+  const menus = await indexeddb.menu.toArray();
   return {
-    types: types,
-    muscles: muscles,
-    masters: masters,
+    data: {
+      lines: lines,
+      areas: areas,
+      gyms: gyms,
+      stations: stations,
+      muscles: muscles,
+      menus: menus
+    }
   };
 };

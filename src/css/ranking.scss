@@ -1,4 +1,6 @@
 .ranking {
+  background-color: #ccc;
+  min-height: calc(100vh - 236px);
   ul {
     li.item {
       display: flex;
@@ -6,6 +8,8 @@
       padding: 8px;
       margin-bottom: 8px;
       column-gap: 16px;
+      background-color: #fff;
+      border-radius: 8px;
       h3 {
         font-size: 16px;
       }
