@@ -71,3 +71,12 @@ export const convert2SendMessage = (data: MessageItemType): DbSendMessageItemTyp
     Date: data.date,
   };
 };
+/**
+ * 
+ * @param data 
+ * @returns 
+ */
+export const createMarkup = (data: string | undefined) => {
+  const dataStr = data ? data.replace(/&/g, '&lt;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/`/g, '&#x60;') : '';
+  return { __html: dataStr.replace(/\n/g, '<br />') };
+};

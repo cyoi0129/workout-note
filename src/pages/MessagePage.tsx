@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { selectChatData, fetchMessageData, sendMessageData, fetchChatData } from '../features/chat';
 import { selectNoticeData, removeMessageNoticeData } from '../features/notice';
 import { DbSendMessageItemType, MessageItemType } from '../features/chat/types';
+import { createMarkup } from '../features/chat/func';
 import Cookies from 'js-cookie';
 import '../css/message.scss';
 import { IoIosSend } from 'react-icons/io';
@@ -22,7 +23,7 @@ const MessagePage: FC = () => {
   const [message, setMessage] = useState<string>('');
   const user_id: number = Number(Cookies.get('user_id'));
 
-  const uri = "ws://localhost:8080/ws/" + chatID + '?' + new URLSearchParams({ user: String(user_id) });
+  const uri = 'ws://localhost:8080/ws/' + chatID + '?' + new URLSearchParams({ user: String(user_id) });
   const ws = new WebSocket(uri);
 
   ws.onopen = () => {
@@ -31,7 +32,7 @@ const MessagePage: FC = () => {
 
   ws.onmessage = (e) => {
     const message_data = JSON.parse(e.data);
-    if(Number(message_data.id) !== user_id) {
+    if (Number(message_data.id) !== user_id) {
       const new_message: MessageItemType = {
         id: 0,
         chatID: Number(chatID),
@@ -39,7 +40,7 @@ const MessagePage: FC = () => {
         receiver: user_id,
         content: message_data.message,
         date: new Date(e.timeStamp).toLocaleTimeString(),
-      }
+      };
       setMessageList([...messageList, new_message]);
     }
   };
@@ -99,7 +100,7 @@ const MessagePage: FC = () => {
                     {displayName}
                   </h4>
                 )}
-                <div className="message">{message.content}</div>
+                <div className="message" dangerouslySetInnerHTML={createMarkup(message.content)}></div>
                 {index === messageList.length - 1 ? <div className="time">{message.date.replace('T', ' ').replace('Z', '')}</div> : null}
               </li>
             ))}

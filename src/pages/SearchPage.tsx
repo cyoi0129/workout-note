@@ -77,7 +77,7 @@ const SearchPage: FC = () => {
       <section>
         <h2>マッチョ検索{showMenu ? null : <div className="arrow_btn" onClick={() => setShowMenu(true)}><IoIosArrowDropdownCircle /></div>}</h2>
         {showMenu ? (
-          <div className="filter">
+          <>
             <dl>
               <dt>ジム</dt>
               <dd>
@@ -95,7 +95,7 @@ const SearchPage: FC = () => {
             <div className="button">
               <button onClick={doSearch}>検索</button>
             </div>
-          </div>
+          </>
         ) : null}
         <div className="results" ref={resultRef}>
           <ul>

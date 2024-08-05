@@ -66,6 +66,7 @@ const User: FC = () => {
       dl: dl
     }
     dispatch(updateUserInfo(userData));
+    alert('Saved');
   };
 
   useEffect(() => {
