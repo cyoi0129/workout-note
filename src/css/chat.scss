@@ -22,10 +22,13 @@
         display: -webkit-box;
         text-overflow: ellipsis;
         -webkit-box-orient: vertical;
-        line-clamp: 2;
-        max-height: 48px;
+        -webkit-line-clamp: 2;
+        max-height: 30px;
+        font-size: 12px;
+        line-height: 1.2em;
+        color: #999;
         span {
-          color: #999;
+          font-style: italic;
         }
       }
       .notice {
