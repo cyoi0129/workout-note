@@ -5,7 +5,7 @@ import { selectChatData, fetchMessageData, sendMessageData, fetchChatData } from
 import { selectNoticeData, removeMessageNoticeData } from '../features/notice';
 import { DbSendMessageItemType, MessageItemType } from '../features/chat/types';
 import { createMarkup } from '../features/chat/func';
-// import { ws_base } from '../app/util';
+import { ws_base } from '../app/util';
 import Cookies from 'js-cookie';
 import '../css/message.scss';
 import { IoIosSend } from 'react-icons/io';
@@ -24,27 +24,27 @@ const MessagePage: FC = () => {
   const [message, setMessage] = useState<string>('');
   const user_id: number = Number(Cookies.get('user_id'));
 
-  // const uri = ws_base + chatID + '?' + new URLSearchParams({ user: String(user_id) });
-  // const ws = new WebSocket(uri);
+  const uri = ws_base + chatID + '?' + new URLSearchParams({ user: String(user_id) });
+  const ws = new WebSocket(uri);
 
-  // ws.onopen = () => {
-  //   console.log('Connected');
-  // };
+  ws.onopen = () => {
+    console.log('Connected');
+  };
 
-  // ws.onmessage = (e) => {
-  //   const message_data = JSON.parse(e.data);
-  //   if (Number(message_data.id) !== user_id) {
-  //     const new_message: MessageItemType = {
-  //       id: 0,
-  //       chatID: Number(chatID),
-  //       sender: target,
-  //       receiver: user_id,
-  //       content: message_data.message,
-  //       date: new Date(e.timeStamp).toLocaleTimeString(),
-  //     };
-  //     setMessageList([...messageList, new_message]);
-  //   }
-  // };
+  ws.onmessage = (e) => {
+    const message_data = JSON.parse(e.data);
+    if (Number(message_data.id) !== user_id) {
+      const new_message: MessageItemType = {
+        id: 0,
+        chatID: Number(chatID),
+        sender: target,
+        receiver: user_id,
+        content: message_data.message,
+        date: new Date(e.timeStamp).toLocaleTimeString(),
+      };
+      setMessageList([...messageList, new_message]);
+    }
+  };
 
   const sendMessage = () => {
     if (message === '') return;
@@ -56,7 +56,7 @@ const MessagePage: FC = () => {
       Date: new Date().toLocaleDateString().replace(/\//g, '-') + ' ' + new Date().toLocaleTimeString(),
     };
     dispatch(sendMessageData(new_message));
-    // ws.send(new_message.Content);
+    ws.send(new_message.Content);
     setMessage('');
   };
 
