@@ -5,6 +5,7 @@ import { selectChatData, fetchMessageData, sendMessageData, fetchChatData } from
 import { selectNoticeData, removeMessageNoticeData } from '../features/notice';
 import { DbSendMessageItemType, MessageItemType } from '../features/chat/types';
 import { createMarkup } from '../features/chat/func';
+import { ws_base } from '../app/util';
 import Cookies from 'js-cookie';
 import '../css/message.scss';
 import { IoIosSend } from 'react-icons/io';
@@ -23,7 +24,7 @@ const MessagePage: FC = () => {
   const [message, setMessage] = useState<string>('');
   const user_id: number = Number(Cookies.get('user_id'));
 
-  const uri = 'ws://localhost:8080/ws/' + chatID + '?' + new URLSearchParams({ user: String(user_id) });
+  const uri = ws_base + chatID + '?' + new URLSearchParams({ user: String(user_id) });
   const ws = new WebSocket(uri);
 
   ws.onopen = () => {
