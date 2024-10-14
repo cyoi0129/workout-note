@@ -41,7 +41,9 @@ const Login: FC = () => {
             登録
           </li>
         </ul>
-        <div className="form">
+        {isNew ? <div className="form">
+          <p className="stopping">テスト用のサイトです<br />新規登録停止中</p>
+        </div> : <div className="form">
           <dl>
             <dt>メールアドレス</dt>
             <dd>
@@ -55,7 +57,8 @@ const Login: FC = () => {
           <div className="button">
             <button onClick={doProcess}>{isNew ? '登録' : 'ログイン'}</button>
           </div>
-        </div>
+        </div>}
+
       </section>
     </div>
   );
