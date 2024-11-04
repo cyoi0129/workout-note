@@ -9,6 +9,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+
   &:focus {
     outline: none;
   }
@@ -22,6 +23,7 @@ select {
   -webkit-appearance: none;
   appearance: none;
 }
+
 select::-ms-expand {
   display: none;
 }
@@ -46,6 +48,7 @@ a {
   -ms-overflow-style: none;
   scrollbar-width: none;
   width: 100%;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -66,6 +69,7 @@ section {
   width: 100%;
   height: 48px;
   cursor: pointer;
+
   input[type='date'] {
     opacity: 0;
     font-size: 16px;
@@ -77,9 +81,11 @@ section {
     border-radius: 8px;
     background-color: #fff;
     position: relative;
+
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
     }
+
     &::-webkit-clear-button {
       -webkit-appearance: none;
     }
@@ -91,6 +97,7 @@ section {
       opacity: 0;
       cursor: pointer;
     }
+
     &::-webkit-datetime-edit-day-field:focus,
     &::-webkit-datetime-edit-month-field:focus,
     &::-webkit-datetime-edit-year-field:focus {
@@ -99,6 +106,7 @@ section {
       outline: none;
     }
   }
+
   h2 {
     color: #323232;
     position: absolute;
@@ -120,6 +128,7 @@ section {
   display: flex;
   justify-content: center;
   column-gap: 32px;
+
   button {
     cursor: pointer;
     background-color: #fedd00;
@@ -135,6 +144,7 @@ section {
     border: none;
     border-radius: 8px;
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+
     &.remove {
       background-color: #ff7f7f;
       color: #fff;
@@ -147,7 +157,7 @@ section {
   position: fixed;
   bottom: 120px;
   right: 16px;
-  background-color:#fedd00;
+  background-color: #fedd00;
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
   border-radius: 50%;
   line-height: 0;
@@ -157,11 +167,13 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+
   svg {
     font-size: 32px;
     color: #323232;
   }
 }
+
 .permission {
   width: 100%;
   height: 100vh;
@@ -172,6 +184,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+
   .permission_container {
     background: #fff;
     z-index: 3;
@@ -181,6 +194,7 @@ section {
     padding: 32px 16px;
     border-radius: 4px;
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+
     h2 {
       font-size: 20px;
       color: #323232;
@@ -196,6 +210,35 @@ section {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
+
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .alert {
@@ -208,12 +251,14 @@ section {
   justify-content: center;
   top: 0;
   left: 0;
+
   .container {
     height: 240px;
     width: calc(100% - 64px);
     margin: 0 auto;
     background-color: #fff;
     border-radius: 4px;
+
     h2 {
       background-color: #fedd00;
       width: 100%;
@@ -222,6 +267,7 @@ section {
       border-top-right-radius: 4px;
       padding: 8px 0;
     }
+
     p {
       text-align: center;
       margin: 48px auto;
