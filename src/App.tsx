@@ -41,10 +41,9 @@ const App: FC = () => {
 
   useEffect(() => {
     if (!apiHealth) {
-      console.log("health check")
       setTimeout(() => {
         doHealthCheck();
-      }, 10000);
+      }, 60000);
     }
   });
 
@@ -69,7 +68,16 @@ const App: FC = () => {
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
       <Footer />
-      {!apiHealth ? <div className="overlay"><div className="loading"><span className="loader"></span></div></div> : null}
+      {!apiHealth ?
+        <div className="overlay">
+          <div className="loading">
+            <p className="message">Server Restarting (60s) ...</p>
+            <div className="progress">
+              <p className="bar"></p>
+            </div>
+            <span className="loader"></span>
+          </div>
+        </div> : null}
     </>
   );
 };
