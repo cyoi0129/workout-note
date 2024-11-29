@@ -41,24 +41,33 @@ const Login: FC = () => {
             登録
           </li>
         </ul>
-        {isNew ? <div className="form">
-          <p className="stopping">テスト用のサイトです<br />新規登録停止中</p>
-        </div> : <div className="form">
-          <dl>
-            <dt>メールアドレス</dt>
-            <dd>
-              <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
-            </dd>
-            <dt>パスワード</dt>
-            <dd>
-              <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
-            </dd>
-          </dl>
-          <div className="button">
-            <button onClick={doProcess}>{isNew ? '登録' : 'ログイン'}</button>
+        {isNew ? (
+          <div className="form">
+            <p className="stopping">
+              テスト用のサイトです
+              <br />
+              新規登録停止中
+            </p>
           </div>
-        </div>}
-
+        ) : (
+          <div className="form">
+            <dl>
+              <dt>メールアドレス</dt>
+              <dd>
+                <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
+                <div className="hint">user1@test.com</div>
+              </dd>
+              <dt>パスワード</dt>
+              <dd>
+                <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
+                <div className="hint">test</div>
+              </dd>
+            </dl>
+            <div className="button">
+              <button onClick={doProcess}>{isNew ? '登録' : 'ログイン'}</button>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
