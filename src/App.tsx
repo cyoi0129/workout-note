@@ -6,7 +6,7 @@ import { useAppDispatch } from './app/hooks';
 import { checkApiHealth } from './app/health';
 import { fetchUserInfo } from './features/user';
 import { fetchNoticeData } from './features/notice';
-import { fetchMasterData, fetchMasterStorage } from './features/master';
+import { fetchMasterData, fetchMasterStorage, fetchMasterJson } from './features/master';
 import './css/common.scss';
 import Cookies from 'js-cookie';
 
@@ -15,14 +15,16 @@ const App: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [apiHealth, setApiHealth] = useState<boolean>(false);
+  const [retry, setRetry] = useState<boolean>(false);
+  const [useJson, setUseJson] = useState<boolean>(false);
 
   /**
    * APIサーバーの起動状況チェック
    */
   const doHealthCheck = async (): Promise<void> => {
     const healthResult = await checkApiHealth();
-    setApiHealth(healthResult === "OK");
-  }
+    setApiHealth(healthResult === 'OK');
+  };
 
   useEffect(() => {
     doHealthCheck();
@@ -41,11 +43,22 @@ const App: FC = () => {
 
   useEffect(() => {
     if (!apiHealth) {
-      setTimeout(() => {
-        doHealthCheck();
-      }, 60000);
+      if (!retry) {
+        setTimeout(() => {
+          doHealthCheck();
+          setRetry(true);
+        }, 5000);
+      } else {
+        setApiHealth(true);
+        dispatch(fetchMasterJson());
+        setUseJson(true);
+      }
     }
   });
+
+  useEffect(() => {
+    if (useJson) alert('現在サーバー停止中、筋トレ記録のみ利用可能');
+  }, [useJson]);
 
   useEffect(() => {
     dispatch(fetchNoticeData());
@@ -68,16 +81,17 @@ const App: FC = () => {
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
       <Footer />
-      {!apiHealth ?
+      {!apiHealth ? (
         <div className="overlay">
           <div className="loading">
-            <p className="message">Server Restarting (60s) ...</p>
+            <p className="message">サーバー再起動 (60s) ...</p>
             <div className="progress">
               <p className="bar"></p>
             </div>
             <span className="loader"></span>
           </div>
-        </div> : null}
+        </div>
+      ) : null}
     </>
   );
 };

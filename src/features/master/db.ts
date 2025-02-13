@@ -2,6 +2,7 @@ import { StoreMasterResponseType, StorageMasterResponseType } from './types';
 import { indexeddb } from '../../app/storage';
 import { convertDbMasterResponse } from './func';
 import { api_base } from '../../app/util';
+import offline_master from '../../app/offline.json';
 import Cookies from 'js-cookie';
 
 /**
@@ -22,6 +23,16 @@ export const fetchDbMasterData = async (): Promise<StoreMasterResponseType> => {
     .catch((error) => {
       console.error(error);
     });
+  return convertDbMasterResponse(response);
+};
+
+/**
+ * APIエラー時jsonファイルからマスターデータの取得
+ * @returns
+ */
+export const fetchJsonMasterData = async (): Promise<StoreMasterResponseType> => {
+  const response = JSON.parse(JSON.stringify(offline_master));
+  console.log(response);
   return convertDbMasterResponse(response);
 };
 

@@ -1,12 +1,17 @@
 import { createAsyncThunk, AsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { RootState, AsyncThunkConfig } from '../../app/store';
 import MasterDataSlice from './slice';
-import { fetchDbMasterData, fetchIndexedDbMasterData } from './db';
+import { fetchDbMasterData, fetchIndexedDbMasterData, fetchJsonMasterData } from './db';
 import { GeneralItemType } from '../../app/types';
 import { StoreMasterResponseType, StorageMasterResponseType, MuscleItemType, MenuItemType } from './types';
 
 export const fetchMasterData: AsyncThunk<StoreMasterResponseType, void, AsyncThunkConfig> = createAsyncThunk('MasterData/fetchData', async () => {
   const response = await fetchDbMasterData();
+  return response;
+});
+
+export const fetchMasterJson: AsyncThunk<StoreMasterResponseType, void, AsyncThunkConfig> = createAsyncThunk('MasterData/fetchJson', async () => {
+  const response = await fetchJsonMasterData();
   return response;
 });
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMasterData, fetchMasterStorage } from '.';
+import { fetchMasterData, fetchMasterStorage, fetchMasterJson } from '.';
 import { MasterStoreType } from './types';
 import { intialIndexedDb } from './db';
 import Cookies from 'js-cookie';
@@ -43,6 +43,18 @@ const MasterDataSlice = createSlice({
         state.menus = [];
         Cookies.remove('master');
       }
+    });
+    builder.addCase(fetchMasterJson.fulfilled, (state, action) => {
+      state.error = false;
+      state.loading = false;
+      state.lines = action.payload.data.lines;
+      state.areas = action.payload.data.areas;
+      state.gyms = action.payload.data.gyms;
+      state.stations = action.payload.data.stations;
+      state.muscles = action.payload.data.muscles;
+      state.menus = action.payload.data.menus;
+      Cookies.set('master', '1', { expires: 1000 });
+      intialIndexedDb(action.payload);
     });
     builder.addCase(fetchMasterStorage.fulfilled, (state, action) => {
       state.error = false;
